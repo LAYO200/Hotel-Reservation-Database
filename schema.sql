@@ -12,7 +12,7 @@ CREATE TABLE Hotel (
     city VARCHAR(100) NOT NULL,
     province VARCHAR(100) NOT NULL,
     country VARCHAR(100) NOT NULL,
-    address VARCHAR(255) NOT NULL,
+    street_address VARCHAR(255) NOT NULL,
     CONSTRAINT fk_hotel_brand
         FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
 );
