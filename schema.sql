@@ -1,12 +1,20 @@
 -- Hotel Reservation Database Schema
 
+CREATE TABLE Brand (
+    brand_id INT AUTO_INCREMENT PRIMARY KEY,
+    brand_name VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE Hotel (
     hotel_id INT AUTO_INCREMENT PRIMARY KEY,
+    brand_id INT NOT NULL,
     hotel_name VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     province VARCHAR(100) NOT NULL,
     country VARCHAR(100) NOT NULL,
-    address VARCHAR(255) NOT NULL
+    address VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_hotel_brand
+        FOREIGN KEY (brand_id) REFERENCES Brand(brand_id)
 );
 
 CREATE TABLE RoomType (
