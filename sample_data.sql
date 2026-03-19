@@ -270,7 +270,7 @@ INSERT INTO RoomAssignment (reservation_id, room_id) VALUES
 ( 4, 20),   -- Emma      → Atlantic Suites Halifax,   Queen Suite  201
 ( 5,  4),   -- William   → Maple Leaf Grand,          Penthouse    801
 ( 6, 10),   -- Sophia    → Pacific Crown Vancouver,   Penthouse    901
-( 7, 15),   -- James     → Northern Comfort Calgary,  Double       103
+--( 7, 15), -- James     → Northern Comfort Calgary,  Double       103  -- CANCELLED NO ROOM ASSIGNMENT
 ( 8, 21),   -- Isabella  → Atlantic Suites Halifax,   Penthouse    601
 ( 9, 25),   -- Benjamin  → Prairie Star Regina,       Single       101
 (10, 30),   -- Ava       → CanLux Ottawa Centre,      Penthouse   1001
@@ -280,14 +280,14 @@ INSERT INTO RoomAssignment (reservation_id, room_id) VALUES
 (14, 16),   -- Charlotte → Northern Comfort Calgary,  Family Room  401
 (15, 23),   -- Alexander → Atlantic Suites Moncton,   Single       101
 (16,  6),   -- Amelia    → Maple Leaf Midtown,        Double       102
-(17, 17),   -- Henry     → Northern Comfort Edmonton, Single       101
+--(17, 17), -- Henry     → Northern Comfort Edmonton, Single       101  -- CANCELLED NO ROOM ASSIGNMENT
 (18, 22),   -- Harper    → Atlantic Suites Halifax,   Penthouse    601  -- re-assigned different dates
 (19,  5),   -- Sebastian → Maple Leaf Midtown,        Single       101
 (20, 27),   -- Evelyn    → Prairie Star Regina,       Double       102
 (21,  2),   -- Daniel    → Maple Leaf Grand,          Double       102
 (22, 12),   -- Scarlett  → Pacific Crown Victoria,    Double       102
 (23, 18),   -- Michael   → Northern Comfort Edmonton, Double       102
-(24, 24),   -- Luna      → Atlantic Suites Moncton,   Double       102
+--(24, 24), -- Luna      → Atlantic Suites Moncton,   Double       102  -- CANCELLED NO ROOM ASSIGNMENT
 (25, 28),   -- Jackson   → Prairie Star Regina,       Queen Suite  201
 (26,  7),   -- Penelope  → Maple Leaf Midtown,        Family Room  301
 (27, 13),   -- Owen      → Pacific Crown Victoria,    Queen Suite  201
