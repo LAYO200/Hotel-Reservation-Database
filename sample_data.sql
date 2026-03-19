@@ -56,17 +56,28 @@ CREATE TABLE Guest (
     phone_number VARCHAR(20)
 );
 
+CREATE TABLE ReservationStatus (
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    label VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
+);
+
 CREATE TABLE Reservation (
-    reservation_id   INT AUTO_INCREMENT PRIMARY KEY,
-    guest_id         INT         NOT NULL,
-    check_in_date    DATE        NOT NULL,
-    check_out_date   DATE        NOT NULL,
-    reservation_date DATE        NOT NULL,
-    status           VARCHAR(20) NOT NULL,
+    reservation_id    INT AUTO_INCREMENT PRIMARY KEY,
+    guest_id          INT         NOT NULL,
+    check_in_date     DATE        NOT NULL,
+    check_out_date    DATE        NOT NULL,
+    reservation_date  DATE        NOT NULL,
+    cancellation_date DATE, 
+    status_id         INT         NOT NULL,
     CONSTRAINT fk_reservation_guest
         FOREIGN KEY (guest_id) REFERENCES Guest(guest_id),
+    CONSTRAINT fk_reservation_status
+        FOREIGN KEY (status_id) REFERENCES ReservationStatus(id),
     CONSTRAINT chk_reservation_dates
-        CHECK (check_out_date > check_in_date)
+        CHECK (check_out_date > check_in_date 
+               AND reservation_date <= check_in_date)
 );
 
 CREATE TABLE RoomAssignment (
@@ -201,39 +212,52 @@ INSERT INTO Guest (first_name, last_name, email, phone_number) VALUES
 ('Stella',    'Paradis',     'stella.paradis@email.ca',     '705-555-3030');
 
 -- ------------------------------------------------------------
+-- Reservation Status
+-- ------------------------------------------------------------
+INSERT INTO ReservationStatus (code, label, description) VALUES
+('PENDING', 'Pending', 'Awaiting Confirmation or Payment'), --id 1
+('CONFIRMED', 'Confirmed', 'Reservation is confirmed'), --id 2
+('DUEIN', 'Due In', 'Guest is scheduled to check in today'), --id 3
+('CHECKEDIN', 'Checked In', 'Guest is checked in'), --id 4
+('DUEOUT', 'Due Out', 'Guest is scheduled to check out today'), --id 5
+('CHECKEDOUT', 'Checked Out', 'Guest is checked out'), --id 6
+('CANCELLED', 'Cancelled', 'Reservation was cancelled'), --id 7
+('NOSHOW', 'No Show', 'Guest did not show up on the check in date'); --id 8
+
+-- ------------------------------------------------------------
 -- Reservation  (30 rows)
 -- ------------------------------------------------------------
-INSERT INTO Reservation (guest_id, check_in_date, check_out_date, reservation_date, status) VALUES
-( 1, '2025-07-01', '2025-07-05', '2025-06-01', 'confirmed'),
-( 2, '2025-07-03', '2025-07-07', '2025-06-05', 'confirmed'),
-( 3, '2025-07-10', '2025-07-12', '2025-06-10', 'confirmed'),
-( 4, '2025-07-14', '2025-07-18', '2025-06-15', 'pending'),
-( 5, '2025-07-20', '2025-07-23', '2025-06-18', 'confirmed'),
-( 6, '2025-07-25', '2025-07-28', '2025-06-20', 'confirmed'),
-( 7, '2025-08-01', '2025-08-04', '2025-07-01', 'cancelled'),
-( 8, '2025-08-05', '2025-08-09', '2025-07-03', 'confirmed'),
-( 9, '2025-08-10', '2025-08-13', '2025-07-05', 'confirmed'),
-(10, '2025-08-15', '2025-08-19', '2025-07-08', 'pending'),
-(11, '2025-08-20', '2025-08-22', '2025-07-10', 'confirmed'),
-(12, '2025-08-25', '2025-08-28', '2025-07-12', 'confirmed'),
-(13, '2025-09-01', '2025-09-05', '2025-07-15', 'confirmed'),
-(14, '2025-09-06', '2025-09-08', '2025-07-18', 'pending'),
-(15, '2025-09-10', '2025-09-14', '2025-07-20', 'confirmed'),
-(16, '2025-09-15', '2025-09-18', '2025-07-22', 'confirmed'),
-(17, '2025-09-20', '2025-09-23', '2025-07-25', 'cancelled'),
-(18, '2025-09-25', '2025-09-28', '2025-07-28', 'confirmed'),
-(19, '2025-10-01', '2025-10-04', '2025-08-01', 'confirmed'),
-(20, '2025-10-05', '2025-10-09', '2025-08-05', 'pending'),
-(21, '2025-10-10', '2025-10-13', '2025-08-08', 'confirmed'),
-(22, '2025-10-15', '2025-10-17', '2025-08-10', 'confirmed'),
-(23, '2025-10-20', '2025-10-24', '2025-08-12', 'confirmed'),
-(24, '2025-10-25', '2025-10-28', '2025-08-15', 'cancelled'),
-(25, '2025-11-01', '2025-11-05', '2025-08-18', 'confirmed'),
-(26, '2025-11-06', '2025-11-09', '2025-08-20', 'pending'),
-(27, '2025-11-10', '2025-11-14', '2025-08-22', 'confirmed'),
-(28, '2025-11-15', '2025-11-18', '2025-08-25', 'confirmed'),
-(29, '2025-11-20', '2025-11-23', '2025-08-28', 'confirmed'),
-(30, '2025-11-25', '2025-11-29', '2025-09-01', 'pending');
+INSERT INTO Reservation (guest_id, check_in_date, check_out_date, reservation_date, cancellation_date, status_id) VALUES
+( 1, '2025-07-01', '2025-07-05', '2025-06-01', NULL, 2),
+( 2, '2025-07-03', '2025-07-07', '2025-06-05', NULL, 2),
+( 3, '2025-07-10', '2025-07-12', '2025-06-10', NULL, 2),
+( 4, '2025-07-14', '2025-07-18', '2025-06-15', NULL, 2),
+( 5, '2025-07-20', '2025-07-23', '2025-06-18', NULL, 2),
+( 6, '2025-07-25', '2025-07-28', '2025-06-20', NULL, 2),
+( 7, '2025-08-01', '2025-08-04', '2025-07-01', '2025-07-15', 7),
+( 8, '2025-08-05', '2025-08-09', '2025-07-03', NULL, 2),
+( 9, '2025-08-10', '2025-08-13', '2025-07-05', NULL, 2),
+(10, '2025-08-15', '2025-08-19', '2025-07-08', NULL, 1),
+(11, '2025-08-20', '2025-08-22', '2025-07-10', NULL, 2),
+(12, '2025-08-25', '2025-08-28', '2025-07-12', NULL, 2),
+(13, '2025-09-01', '2025-09-05', '2025-07-15', NULL, 2),
+(14, '2025-09-06', '2025-09-08', '2025-07-18', NULL, 1),
+(15, '2025-09-10', '2025-09-14', '2025-07-20', NULL, 2),
+(16, '2025-09-15', '2025-09-18', '2025-07-22', NULL, 2),
+(17, '2025-09-20', '2025-09-23', '2025-07-25', '2025-08-10', 7),
+(18, '2025-09-25', '2025-09-28', '2025-07-28', NULL, 2),
+(19, '2025-10-01', '2025-10-04', '2025-08-01', NULL, 2),
+(20, '2025-10-05', '2025-10-09', '2025-08-05', NULL, 1),
+(21, '2025-10-10', '2025-10-13', '2025-08-08', NULL, 2),
+(22, '2025-10-15', '2025-10-17', '2025-08-10', NULL, 2),
+(23, '2025-10-20', '2025-10-24', '2025-08-12', NULL, 2),
+(24, '2025-10-25', '2025-10-28', '2025-08-15', '2025-09-01', 7),
+(25, '2025-11-01', '2025-11-05', '2025-08-18', NULL, 2),
+(26, '2025-11-06', '2025-11-09', '2025-08-20', NULL, 1),
+(27, '2025-11-10', '2025-11-14', '2025-08-22', NULL, 2),
+(28, '2025-11-15', '2025-11-18', '2025-08-25', NULL, 2),
+(29, '2025-11-20', '2025-11-23', '2025-08-28', NULL, 2),
+(30, '2025-11-25', '2025-11-29', '2025-09-01', NULL, 1);
 
 -- ------------------------------------------------------------
 -- RoomAssignment  (30 rows — each reservation gets one room)
