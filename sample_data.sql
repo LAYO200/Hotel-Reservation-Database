@@ -34,16 +34,26 @@ CREATE TABLE RoomType (
     base_price   DECIMAL(10,2) NOT NULL
 );
 
+CREATE TABLE RoomStatus (
+    id  INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    label VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT
+);
+
 CREATE TABLE Room (
     room_id      INT AUTO_INCREMENT PRIMARY KEY,
     hotel_id     INT         NOT NULL,
     room_type_id INT         NOT NULL,
     room_number  VARCHAR(10) NOT NULL,
     floor_number INT         NOT NULL,
+    status_id    INT         NOT NULL DEFAULT 1,
     CONSTRAINT fk_room_hotel
         FOREIGN KEY (hotel_id)     REFERENCES Hotel(hotel_id),
     CONSTRAINT fk_room_roomtype
         FOREIGN KEY (room_type_id) REFERENCES RoomType(room_type_id),
+    CONSTRAINT fk_room_status
+        FOREIGN KEY (status_id) REFERENCES RoomStatus(id),
     CONSTRAINT uq_room_number_per_hotel
         UNIQUE (hotel_id, room_number)
 );
@@ -69,8 +79,8 @@ CREATE TABLE Reservation (
     check_in_date     DATE        NOT NULL,
     check_out_date    DATE        NOT NULL,
     reservation_date  DATE        NOT NULL,
-    cancellation_date DATE, 
-    status_id         INT         NOT NULL,
+    cancellation_date DATE        DEFAULT NULL,
+    status_id         INT         NOT NULL 
     CONSTRAINT fk_reservation_guest
         FOREIGN KEY (guest_id) REFERENCES Guest(guest_id),
     CONSTRAINT fk_reservation_status
@@ -130,6 +140,15 @@ INSERT INTO RoomType (type_name, capacity, base_price) VALUES
 ('Family Room',  4, 219.99),
 ('Penthouse',    2, 399.99);
 
+
+-- ------------------------------------------------------------
+-- Room Status
+-- ------------------------------------------------------------
+INSERT INTO RoomStatus (code, label, description) VALUES
+('VACANT', 'Vacant', 'Room vacant and inspected'), --id 1
+('OCCUPIED', 'Occupied', 'Room occupied'), --id 2
+('DIRTY', 'Dirty', 'Room vacant but not cleaned'), --id 3
+('CLEAN', 'Clean', 'Room clean but not inspected'), --id 4
 -- ------------------------------------------------------------
 -- Room  (30 rows — spread across all 10 hotels)
 -- ------------------------------------------------------------
