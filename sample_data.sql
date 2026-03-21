@@ -246,14 +246,14 @@ INSERT INTO Guest (first_name, last_name, email, phone_number) VALUES
 
 
 INSERT INTO ReservationStatus (code, label, description) VALUES
-('PENDING',     'Pending',     'Awaiting confirmation or payment'), --id 1
-('CONFIRMED',   'Confirmed',   'Reservation is confirmed'), --id 2
-('DUEIN',       'Due In',      'Guest is scheduled to check in today'), --id 3
-('CHECKEDIN',   'Checked In',  'Guest is checked in'), --id 4
-('DUEOUT',      'Due Out',     'Guest is scheduled to check out today'), --id 5
-('CHECKEDOUT',  'Checked Out', 'Guest is checked out'), --id 6
-('CANCELLED',   'Cancelled',   'Reservation was cancelled'), --id 7
-('NOSHOW',      'No Show',     'Guest did not show up on the check-in date'); --id 8
+('PENDING',     'Pending',     'Awaiting confirmation or payment'), -- id 1
+('CONFIRMED',   'Confirmed',   'Reservation is confirmed'), -- id 2
+('DUEIN',       'Due In',      'Guest is scheduled to check in today'), -- id 3
+('CHECKEDIN',   'Checked In',  'Guest is checked in'), -- id 4
+('DUEOUT',      'Due Out',     'Guest is scheduled to check out today'), -- id 5
+('CHECKEDOUT',  'Checked Out', 'Guest is checked out'), -- id 6
+('CANCELLED',   'Cancelled',   'Reservation was cancelled'), -- id 7
+('NOSHOW',      'No Show',     'Guest did not show up on the check-in date'); -- id 8
 
 INSERT INTO Reservation (guest_id, hotel_id, check_in_date, check_out_date, reservation_date, cancellation_date, status_id) VALUES
 ( 1,  1, '2025-07-01', '2025-07-05', '2025-06-01', NULL,         2),  -- Liam      → Maple Leaf Grand
@@ -276,7 +276,7 @@ INSERT INTO Reservation (guest_id, hotel_id, check_in_date, check_out_date, rese
 (18,  7, '2025-09-25', '2025-09-28', '2025-07-28', NULL,         2),  -- Harper    → Atlantic Suites Halifax
 (19,  2, '2025-10-01', '2025-10-04', '2025-08-01', NULL,         2),  -- Sebastian → Maple Leaf Midtown
 (20,  9, '2025-10-05', '2025-10-09', '2025-08-05', NULL,         1),  -- Evelyn    → Prairie Star Regina
-(21,  1, '2025-10-10', '2025-10-13', '2025-08-08', NULL,         2),  -- Daniel    → Maple Leaf Grand
+(21,  8, '2025-10-10', '2025-10-13', '2025-08-08', NULL,         2),  -- Daniel    → Atlantic Suites Moncton
 (22,  4, '2025-10-15', '2025-10-17', '2025-08-10', NULL,         2),  -- Scarlett  → Pacific Crown Victoria
 (23,  6, '2025-10-20', '2025-10-24', '2025-08-12', NULL,         2),  -- Michael   → Northern Comfort Edmonton
 (24,  8, '2025-10-25', '2025-10-28', '2025-08-15', '2025-09-01', 7),  -- Luna      → Atlantic Suites Moncton (CANCELLED)
@@ -284,39 +284,37 @@ INSERT INTO Reservation (guest_id, hotel_id, check_in_date, check_out_date, rese
 (26,  2, '2025-11-06', '2025-11-09', '2025-08-20', NULL,         1),  -- Penelope  → Maple Leaf Midtown
 (27,  4, '2025-11-10', '2025-11-14', '2025-08-22', NULL,         2),  -- Owen      → Pacific Crown Victoria
 (28,  6, '2025-11-15', '2025-11-18', '2025-08-25', NULL,         2),  -- Layla     → Northern Comfort Edmonton
-(29,  9, '2025-11-20', '2025-11-23', '2025-08-28', NULL,         2),  -- Gabriel   → Prairie Star Regina
+(29, 10, '2025-11-20', '2025-11-23', '2025-08-28', NULL,         2),  -- Gabriel   → CanLux Ottawa Centre
 (30, 10, '2025-11-25', '2025-11-29', '2025-09-01', NULL,         1);  -- Stella    → CanLux Ottawa Centre
 
--- ------------------------------------------------------------
 -- res 7  (James,  hotel 5) — CANCELLED, no assignment
 -- res 17 (Henry,  hotel 6) — CANCELLED, no assignment
 -- res 24 (Luna,   hotel 8) — CANCELLED, no assignment
--- ------------------------------------------------------------
 INSERT INTO RoomAssignment (reservation_id, room_id, hotel_id) VALUES
 ( 1,  3,  1),  -- Liam      → Maple Leaf Grand,          Queen Suite  rm201
-( 2,  9,  3),  -- Olivia    → Pacific Crown Vancouver,   Queen Suite  rm202
-( 3, 14,  5),  -- Noah      → Northern Comfort Calgary,  Single       rm101
-( 4, 21,  7),  -- Emma      → Atlantic Suites Halifax,   Queen Suite  rm201
 ( 5,  4,  1),  -- William   → Maple Leaf Grand,          Penthouse    rm801
-( 6, 10,  3),  -- Sophia    → Pacific Crown Vancouver,   Penthouse    rm901
-( 8, 22,  7),  -- Isabella  → Atlantic Suites Halifax,   Penthouse    rm601
-( 9, 26,  9),  -- Benjamin  → Prairie Star Regina,       Single       rm101
-(10, 31, 10),  -- Ava       → CanLux Ottawa Centre,      Penthouse    rm1001
 (11,  1,  1),  -- Lucas     → Maple Leaf Grand,          Single       rm101
+(16,  6,  2),  -- Amelia    → Maple Leaf Midtown,        Double       rm102
+(19,  5,  2),  -- Sebastian → Maple Leaf Midtown,        Single       rm101
+(26,  7,  2),  -- Penelope  → Maple Leaf Midtown,        Family Room  rm301
+( 2,  9,  3),  -- Olivia    → Pacific Crown Vancouver,   Queen Suite  rm202
+( 6, 10,  3),  -- Sophia    → Pacific Crown Vancouver,   Penthouse    rm901
 (12,  8,  3),  -- Mia       → Pacific Crown Vancouver,   Double       rm101
 (13, 11,  4),  -- Ethan     → Pacific Crown Victoria,    Single       rm101
-(14, 16,  5),  -- Charlotte → Northern Comfort Calgary,  Family Room  rm401
-(15, 23,  8),  -- Alexander → Atlantic Suites Moncton,   Single       rm101
-(16,  6,  2),  -- Amelia    → Maple Leaf Midtown,        Double       rm102
-(18, 20,  7),  -- Harper    → Atlantic Suites Halifax,   Double       rm101
-(19,  5,  2),  -- Sebastian → Maple Leaf Midtown,        Single       rm101
-(20, 27,  9),  -- Evelyn    → Prairie Star Regina,       Double       rm102
-(21,  2,  1),  -- Daniel    → Maple Leaf Grand,          Double       rm102
 (22, 12,  4),  -- Scarlett  → Pacific Crown Victoria,    Double       rm102
-(23, 18,  6),  -- Michael   → Northern Comfort Edmonton, Double       rm102
-(25, 28,  9),  -- Jackson   → Prairie Star Regina,       Queen Suite  rm201
-(26,  7,  2),  -- Penelope  → Maple Leaf Midtown,        Family Room  rm301
 (27, 13,  4),  -- Owen      → Pacific Crown Victoria,    Queen Suite  rm201
+( 3, 14,  5),  -- Noah      → Northern Comfort Calgary,  Single       rm101
+(14, 16,  5),  -- Charlotte → Northern Comfort Calgary,  Family Room  rm401
+(23, 18,  6),  -- Michael   → Northern Comfort Edmonton, Double       rm102
 (28, 19,  6),  -- Layla     → Northern Comfort Edmonton, Queen Suite  rm205
-(29, 26,  9),  -- Gabriel   → Prairie Star Regina,       Single       rm101
-(30, 30, 10);  -- Stella    → CanLux Ottawa Centre,      Queen Suite  rm201
+( 4, 21,  7),  -- Emma      → Atlantic Suites Halifax,   Queen Suite  rm201
+( 8, 22,  7),  -- Isabella  → Atlantic Suites Halifax,   Penthouse    rm601
+(18, 20,  7),  -- Harper    → Atlantic Suites Halifax,   Double       rm101
+(15, 23,  8),  -- Alexander → Atlantic Suites Moncton,   Single       rm101
+(21, 24,  8),  -- Daniel    → Atlantic Suites Moncton,   Double       rm102
+( 9, 26,  9),  -- Benjamin  → Prairie Star Regina,       Single       rm101
+(20, 27,  9),  -- Evelyn    → Prairie Star Regina,       Double       rm102
+(25, 28,  9),  -- Jackson   → Prairie Star Regina,       Queen Suite  rm201
+(10, 31, 10),  -- Ava       → CanLux Ottawa Centre,      Penthouse    rm1001
+(29, 30, 10),  -- Gabriel   → CanLux Ottawa Centre,      Queen Suite  rm201
+(30, 29, 10);  -- Stella    → CanLux Ottawa Centre,      Single       rm101
