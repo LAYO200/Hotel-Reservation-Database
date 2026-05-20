@@ -1,4 +1,4 @@
-# Database Project – Delivery II
+# Hotel Reservation Database Project
 
 ## Overview
 This project implements a relational database designed to demonstrate proper database modeling and implementation using SQL. The database structure is represented using an Entity Relationship Model (ERM), and the schema is implemented using a SQL script that creates all tables, defines relationships, and inserts synthetic data.
